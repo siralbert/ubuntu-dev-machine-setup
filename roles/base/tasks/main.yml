@@ -59,11 +59,11 @@
     upgrade: dist
     force_apt_get: yes
 
-- name: install archiving tools
-  apt:
-    name: "{{ base_archiving_tools }}"
-    state: present
-    force_apt_get: yes
+#- name: install archiving tools
+#  apt:
+#    name: "{{ base_archiving_tools }}"
+#    state: present
+#    force_apt_get: yes
 
 - name: install productivity tools
   apt:
@@ -130,11 +130,11 @@
     state: present
     force_apt_get: yes
 
-- name: install media packages
-  apt:
-    name: "{{ base_media_tools }}"
-    state: present
-    force_apt_get: yes
+#- name: install media packages
+#  apt:
+#    name: "{{ base_media_tools }}"
+#    state: present
+#    force_apt_get: yes
 
 - name: install bash git prompt
   git:
@@ -145,6 +145,17 @@
     update: yes
   become: yes
   become_user: "{{ local_username }}"
+
+# configure global git variables
+- block:
+    - name: configure global name variable (1/3)
+      shell: git config --global user.name "{{ local_username }}"
+      
+    - name: configure global email variable (2/3)
+      shell: git config --global user.email "{{ local_username }}@techlifeguru.net"
+      
+    - name: configure global pushall function for easier git commits (3/3)
+      shell: git config --global alias.pushall '!f(){ git pull && git add -A && git commit -m "$@" && git push;};f'
 
 - block:
     - name: install virtualization tools
@@ -178,6 +189,6 @@
         name: "{{ base_openssh_server.service }}"
         state: started
         enabled: yes
-  when: not laptop_mode
+#  when: not laptop_mode
 
 ...
