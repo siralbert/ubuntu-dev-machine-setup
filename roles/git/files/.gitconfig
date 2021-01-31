@@ -1,0 +1,8 @@
+[user]
+	name = albert
+	email = albert@techlifeguru.net
+[color]
+	ui = auto
+[remote "origin"]
+[alias]
+	pushall = "!f(){ git pull && git add -A && git commit -m \"$@\" && git push;};f"
